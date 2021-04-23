@@ -57,7 +57,7 @@ class DAO {
         $sql = "SELECT * FROM $table WHERE id=$id";
         $query = mysqli_query($con, $sql);
         mysqli_close($con);
-        
+
         $dbObj = mysqli_fetch_assoc($query);
         
         if ($dbObj == null) return null;
@@ -128,6 +128,17 @@ class DAO {
         mysqli_close($con);
 
         return $res;
+    }
+
+
+    function restartAI() {
+        $table = $this->tableName;
+
+        $sql = "ALTER TABLE $table AUTO_INCREMENT = 1";
+        
+        $con = $this->dbConnect();
+        $res = SQL($con, $sql, []);
+        mysqli_close($con);
     }
 }
 
