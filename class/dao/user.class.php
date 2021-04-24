@@ -16,7 +16,3 @@ class UserDAO extends DAO {
 }
 
 ?>
-
-
-
-
