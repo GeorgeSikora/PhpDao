@@ -94,6 +94,7 @@ echo "<p class='comment'>\$newId ... $newId</p>";
 echo "<hr>";
 
 echo "<p><b>Tabulka po vytvoření nového objektu:</b></p>";
+echo "<p class='comment'>Zde můžeme vidět, že do tabulky se nám přidal nový uživatel, tak jak jsme napsali výše v kódu</p>";
 $users = $ud->getAll();
 echoUsers($users);
 
