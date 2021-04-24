@@ -40,6 +40,10 @@ hr {
     padding-left: 32px;
 }
 
+.error {
+    color: #ff4455;
+}
+
 .dataTable {
     margin-left: 6px;
     font-size: 14px;
