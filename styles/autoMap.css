@@ -15,6 +15,11 @@ p {
     color: #eee;
     margin: 0;
 }
+.refreshButton {
+    color:#9cdcfe;
+    cursor: pointer;
+    font-size: 13px;
+}
 
 pre {
     tab-size: 4;
@@ -101,6 +106,7 @@ input[type=text] {
 
 /* BUTTONS */
 .button {
+    cursor: pointer;
     font-size: 15px;
     margin: 4px 0;
     padding: 4px 12px;
@@ -117,8 +123,10 @@ input[type=text] {
 
 .tableList {
     margin: 4px 0;
-    cursor: pointer;
     text-decoration: underline;
+}
+.tableList a {
+    cursor: pointer;
 }
 
 /* SCROLL */

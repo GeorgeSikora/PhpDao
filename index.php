@@ -3,9 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <link rel="stylesheet" href="style.css"/>
-    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
+    <link rel="stylesheet" href="styles/highlightjs/vs2015.css">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DAO příklady použití</title>
 </head>
@@ -21,8 +29,7 @@ db měli vytvořený objekt se stejnými proměnnými, jak sloupci v tabulce.</p
 <b>Třída objektu v PHP</b>
 <p class='comment'>Tak jak zde, v db máme uložené stejné proměnné, se stejnými názvy.</p>
 
-<pre class='code'>
-class User {
+<pre class='code'><code class="php">class User {
     public $id;
     public $name;
     public $age;
@@ -36,7 +43,7 @@ class User {
 class UserDAO extends DAO {
     
 }
-</pre>
+</code></pre>
 
 <hr>
 

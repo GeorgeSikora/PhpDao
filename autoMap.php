@@ -2,6 +2,7 @@
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DAO Automapping</title>
@@ -32,9 +33,7 @@
 <body>
 
     <?php
-        
     $databaseName = '';
-
     ?>
     
     <p class="titleText">PHP DAO - Automatické mapování pro MySQL</p>
@@ -90,10 +89,10 @@ function getTableList() {
         die('<p class="error"><i class="fas fa-exclamation-triangle"></i> Databáze neobsahuje žádnou tabulku</p>');
     }
 
-    echo '<p>Dostupné tabulky:</p>';
+    echo '<p>Dostupné tabulky <span class="refreshButton"><i class="fas fa-sync"></i></span></p>';
     echo '<ul class="tableList">';
     foreach ($result as $key => $val) {
-        echo '<li onclick="loadDaoTable(\''.$val['TABLE_NAME'].'\')">'.$val['TABLE_NAME'].'</li>';
+        echo '<li><a onclick="loadDaoTable(\''.$val['TABLE_NAME'].'\')">'.$val['TABLE_NAME'].'</a></li>';
     }
     echo '</ul>';
 }
