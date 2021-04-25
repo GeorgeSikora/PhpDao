@@ -30,12 +30,30 @@
     </script>
 </head>
 <body>
+
+    <?php
+        
+    $databaseName = '';
+
+    ?>
     
     <p class="titleText">PHP DAO - Automatické mapování pro MySQL</p>
     
     <hr>
 
     <form action="" method="POST" id="tableNameForm">
+        <label for="databaseName">Název databáze</label><br>
+        <input 
+            type="text" 
+            id="databaseName" 
+            name="databaseName" 
+            spellcheck="false" 
+            autocomplete="off"
+            value="<?=isset($_POST['databaseName'])?$_POST['databaseName']:''?>"
+        >
+
+        <br>
+
         <label for="tableName">Název tabulky</label><br>
         <input 
             type="text" 
@@ -45,27 +63,31 @@
             autocomplete="off"
             value="<?=isset($_POST['tableName'])?$_POST['tableName']:''?>"
         >
-        </form>
+
+        <br>
+
+        <button class="button">Vygenerovat</button>
+
+    </form>
 
     <hr>
 
     <?php
 
-$databaseName = "sajkora";
-
 function getTableList() {
     global $databaseName;
-    $con = mysqli_connect("localhost", "root", "", $databaseName) or die("<p class='error'>Chyba s připijením k databázi!</p>");
+    $con = mysqli_connect("localhost", "root", "", $databaseName) or die('<p class="error"><i class="fas fa-exclamation-triangle"></i> Chyba s připijením k databázi,<br>nebo je název databáze zadán špatně!</p>');
 
     $result = SQL($con, 
     "   SELECT TABLE_NAME 
         FROM INFORMATION_SCHEMA.TABLES
-        WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA = ?
+        WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA = ? 
+        ORDER BY TABLE_NAME
     ", [$databaseName]);
     $con->close();
 
     if (count($result) == 0) {
-        die('<p class="error">Databáze neobsahuje žádnou tabulku <i class="fas fa-exclamation-triangle"></i></p>');
+        die('<p class="error"><i class="fas fa-exclamation-triangle"></i> Databáze neobsahuje žádnou tabulku</p>');
     }
 
     echo '<p>Dostupné tabulky:</p>';
@@ -78,6 +100,12 @@ function getTableList() {
 
     require 'autoloader.php';
     
+    if (isset($_POST['databaseName'])) {
+        $databaseName = $_POST['databaseName'];
+    } else {
+        die();
+    }
+    
     getTableList();
 
     if (isset($_POST['tableName'])) {
@@ -87,13 +115,17 @@ function getTableList() {
     }
 
     echo '<hr>';
+    
+    if ($tableName == '') {
+        die('<p class="info"><i class="fas fa-info"></i> Dále je potřeba zadat název tabulky,<br>nebo kliknout na jednu z dostupných.</p>');
+    }
 
     $tableNameUniform = substr($tableName, 0, -1); // user
     $objTableName = ucfirst($tableNameUniform); // User
 
-    $con = mysqli_connect("localhost", "root", "", $databaseName) or die("<p class='error'>Chyba s připijením k databázi!</p>");
+    $con = mysqli_connect("localhost", "root", "", $databaseName) or die('<p class="error"><i class="fas fa-exclamation-triangle"></i> Chyba s připijením k databázi,<br>nebo je název databáze zadán špatně!</p>');
     $result = SQL($con,
-    "   SELECT COLUMN_NAME, DATA_TYPE
+    "   SELECT COLUMN_NAME, DATA_TYPE, COLUMN_TYPE
         FROM INFORMATION_SCHEMA.COLUMNS 
         WHERE TABLE_SCHEMA = ? 
         AND TABLE_NAME = ?
@@ -115,7 +147,7 @@ function getTableList() {
 
     // Class variables
     foreach ($result as $key => $val) {
-        echo '&#9;public $'.$val['COLUMN_NAME'].';&#13;';
+        echo '&#9;public $'.$val['COLUMN_NAME'].'; // '.$val['COLUMN_TYPE'].'&#13;';
     }
 
     // Constructor head
@@ -128,6 +160,8 @@ function getTableList() {
         echo '$'.$varName.'=';
         switch ($val['DATA_TYPE']) {
             case 'int':
+            case 'bigint':
+            case 'decimal':
                 echo "0";
                 break;
             case 'varchar':

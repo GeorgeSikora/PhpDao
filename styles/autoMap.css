@@ -36,6 +36,12 @@ hr {
 .error {
     color: #ff4455;
 }
+.warning {
+    color: #eecc55;
+}
+.info {
+    color: #42d3f8;
+}
 
 code {
     font-size: 16px;
@@ -93,10 +99,44 @@ input[type=text] {
     visibility: visible;
 }
 
+/* BUTTONS */
+.button {
+    font-size: 15px;
+    margin: 4px 0;
+    padding: 4px 12px;
+    background-color: #9cdcfe;
+    border: 1px solid #254674;
+    border-radius: 4px;
+}
+.button:hover {
+    color: #eee;
+    background-color: #0c7d9d;
+}
+
 /* TABLES LIST */
 
 .tableList {
     margin: 4px 0;
     cursor: pointer;
     text-decoration: underline;
+}
+
+/* SCROLL */
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 12px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+    background: #333; 
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
 }
