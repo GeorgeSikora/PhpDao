@@ -5,13 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DAO Automapping</title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
-    <link rel="stylesheet" href="vs2015.css">
+
+    <link rel="stylesheet" href="styles/autoMap.css">
+
+    <!-- Highlight.js themes -->
+    <link rel="stylesheet" href="styles/highlightjs/vs2015.css">
+    <!--<link rel="stylesheet" href="styles/highlightjs/vs.css">-->
+    <!--<link rel="stylesheet" href="styles/highlightjs/atelier-estuary.dark.css">-->
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>hljs.highlightAll();</script>
-
 
     <script>
 
@@ -21,102 +28,6 @@
     }
 
     </script>
-
-
-    <style>
-    body {
-        padding: 16px;
-        font-family: FreeMono, monospace;
-        color: white;
-        background-color: #252526;
-    }
-    p {
-        margin: 0;
-    }
-    .titleText {
-        font-size: 24px;
-        color: #eee;
-        margin: 0;
-    }
-    pre {
-        tab-size: 4;
-    }
-    hr {
-        border-color: #30382c;
-        width: 50%;
-        margin-left: -8px;
-    }
-    .fileName {
-        color: #ffa;
-        padding-left: 8px;
-        line-height: 26px;
-        font-size: 16px;
-    }
-    .error {
-        color: #ff4455;
-    }
-    code {
-        font-size: 16px;
-        border-radius: 10px;
-        padding: 10px 16px !important;
-    }
-    #copyDaoCode {
-        cursor: pointer;
-    }
-
-    input[type=text] {
-        outline: none;
-        border: none;
-        color: white;
-        font-size: 16px;
-        padding: 4px 8px;
-        margin: 6px 0;
-        border-bottom: 1px solid #0c7d9d;
-        background-color: #333333;
-    }
- 
-    /* TOOLTIP */
-    .tooltip {
-        position: relative;
-        display: inline-block;
-    }
-    .tooltip .tooltiptext {
-        font-size: 16px;
-        visibility: hidden;
-        width: 140px;
-        background-color: #000000fa;
-        color: #fff;
-        text-align: center;
-        border-radius: 6px;
-        padding: 3px 0;
-        position: absolute;
-        z-index: 1;
-        bottom: 105%;
-        left: 50%;
-        margin-left: -70px;
-    }
-    .tooltip .tooltiptext::after {
-        content: "";
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: black transparent transparent transparent;
-    }
-    .tooltip:hover .tooltiptext {
-        visibility: visible;
-    }
-
-    /* Tables list */
-    .tableList {
-        margin: 4px 0;
-        cursor: pointer;
-        text-decoration: underline;
-    }
-
-    </style>
 </head>
 <body>
     
@@ -140,13 +51,17 @@
 
     <?php
 
+$databaseName = "sajkora";
+
 function getTableList() {
-    $con = mysqli_connect("localhost", "root", "", "3bdatabaze") or die("<p class='error'>Chyba s připijením k databázi!</p>");
-    $result = SQL($con,
+    global $databaseName;
+    $con = mysqli_connect("localhost", "root", "", $databaseName) or die("<p class='error'>Chyba s připijením k databázi!</p>");
+
+    $result = SQL($con, 
     "   SELECT TABLE_NAME 
         FROM INFORMATION_SCHEMA.TABLES
-        WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA='3bdatabaze' 
-    ", ['3bdatabaze', $tableName]);
+        WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA = ?
+    ", [$databaseName]);
     $con->close();
 
     if (count($result) == 0) {
@@ -176,13 +91,13 @@ function getTableList() {
     $tableNameUniform = substr($tableName, 0, -1); // user
     $objTableName = ucfirst($tableNameUniform); // User
 
-    $con = mysqli_connect("localhost", "root", "", "3bdatabaze") or die("<p class='error'>Chyba s připijením k databázi!</p>");
+    $con = mysqli_connect("localhost", "root", "", $databaseName) or die("<p class='error'>Chyba s připijením k databázi!</p>");
     $result = SQL($con,
     "   SELECT COLUMN_NAME, DATA_TYPE
         FROM INFORMATION_SCHEMA.COLUMNS 
         WHERE TABLE_SCHEMA = ? 
         AND TABLE_NAME = ?
-    ", ['3bdatabaze', $tableName]);
+    ", [$databaseName, $tableName]);
     $con->close();
     
     if (count($result) == 0) {
@@ -217,6 +132,9 @@ function getTableList() {
                 break;
             case 'varchar':
                 echo "''";
+                break;
+            default:
+                echo "null";
                 break;
         }
         $index++;

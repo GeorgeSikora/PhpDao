@@ -1,0 +1,102 @@
+
+body {
+    padding: 16px;
+    font-family: FreeMono, monospace;
+    color: white;
+    background-color: #252526;
+}
+
+p {
+    margin: 0;
+}
+
+.titleText {
+    font-size: 24px;
+    color: #eee;
+    margin: 0;
+}
+
+pre {
+    tab-size: 4;
+}
+
+hr {
+    border-color: #30382c;
+    width: 50%;
+    margin-left: -8px;
+}
+
+.fileName {
+    color: #ffa;
+    padding-left: 8px;
+    line-height: 26px;
+    font-size: 16px;
+}
+
+.error {
+    color: #ff4455;
+}
+
+code {
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 10px 16px !important;
+}
+
+#copyDaoCode {
+    cursor: pointer;
+}
+
+input[type=text] {
+    outline: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    padding: 4px 8px;
+    margin: 6px 0;
+    border-bottom: 1px solid #0c7d9d;
+    background-color: #333333;
+}
+
+/* TOOLTIP */
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+.tooltip .tooltiptext {
+    font-size: 16px;
+    visibility: hidden;
+    width: 140px;
+    background-color: #000000fa;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 3px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 105%;
+    left: 50%;
+    margin-left: -70px;
+}
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+/* TABLES LIST */
+
+.tableList {
+    margin: 4px 0;
+    cursor: pointer;
+    text-decoration: underline;
+}
