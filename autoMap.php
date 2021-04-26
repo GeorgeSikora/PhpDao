@@ -145,7 +145,18 @@ function getTableList() {
 
     <p>Zmapovaná tabulka: <b><?=$tableName?></b></p>
 
-    <pre><span class="fileName"><?=$tableNameUniform?>.class.php <div id="copyDaoCode" class="tooltip" onclick="copyDaoCode()"><i class="far fa-copy"></i><span class="tooltiptext">Kopírovat</span></div></span><code id="daoCode" class="php"><?php
+    <div class="fileName"><?=$tableNameUniform?>.class.php 
+        <div id="copyDaoCode" class="tooltip" onclick="copyDaoCode()">
+            <i class="far fa-copy"></i>
+            <span class="tooltiptext">Kopírovat</span>
+        </div>
+        <div id="downloadDaoCode" class="tooltip" onclick="downloadDaoCode()">
+            <i class="fas fa-file-download"></i>
+            <span class="tooltiptext">Stáhnout</span>
+        </div>
+    </div>  
+
+    <pre><code id="daoCode" class="php"><?php
 
     // Class head
     echo "&lt;?php // $tableNameUniform.class.php&#13;&#13;class $objTableName {&#13;";
@@ -226,15 +237,33 @@ document.body.removeChild(el);
 var daoCode = $('#daoCode').html();
 daoCode = daoCode.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
 
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
 function copyDaoCode() {
     copyStringToClipboard(daoCode);
-    $('.tooltiptext').text('Zkopírováno!');
+    $('#copyDaoCode .tooltiptext').text('Zkopírováno!');
+}
+function downloadDaoCode() {
+    download('<?=$tableNameUniform?>.class.php', daoCode);
+    $('#downloadDaoCode .tooltiptext').text('Staženo!');
 }
 
 $("#copyDaoCode").mouseleave(() => {
-
-    $('.tooltiptext').text('Kopírovat');
-
+    $('#copyDaoCode .tooltiptext').text('Kopírovat');
+});
+$("#downloadDaoCode").mouseleave(() => {
+    $('#downloadDaoCode .tooltiptext').text('Stáhnout');
 });
 
 </script>

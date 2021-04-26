@@ -27,6 +27,7 @@ p {
 }
 
 pre {
+    margin-top: 0;
     tab-size: 4;
 }
 
@@ -41,6 +42,11 @@ hr {
     padding-left: 8px;
     line-height: 26px;
     font-size: 16px;
+    margin-top: 12px;
+    display: inline;
+}
+.fileName i {
+    padding: 0 4px;
 }
 
 .error {
