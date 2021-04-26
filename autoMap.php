@@ -2,20 +2,20 @@
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DAO Automapping</title>
+    <title>DAO Mapování</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
 
-    <link rel="stylesheet" href="styles/autoMap.css">
+    <link rel="stylesheet" href="assets/styles/autoMap.css">
 
     <!-- Highlight.js themes -->
-    <link rel="stylesheet" href="styles/highlightjs/vs2015.css">
-    <!--<link rel="stylesheet" href="styles/highlightjs/vs.css">-->
-    <!--<link rel="stylesheet" href="styles/highlightjs/atelier-estuary.dark.css">-->
+    <link rel="stylesheet" href="assets/styles/highlightjs/vs2015.css">
+    <!--<link rel="stylesheet" href="assets/styles/highlightjs/vs.css">-->
+    <!--<link rel="stylesheet" href="assets/styles/highlightjs/atelier-estuary.dark.css">-->
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -34,42 +34,57 @@
 
     <?php
     $databaseName = '';
+    require 'autoloader.php';
     ?>
     
     <p class="titleText">PHP DAO - Automatické mapování pro MySQL</p>
     
     <hr>
 
-    <form action="" method="POST" id="tableNameForm">
-        <label for="databaseName">Název databáze</label><br>
-        <input 
-            type="text" 
-            id="databaseName" 
-            name="databaseName" 
-            spellcheck="false" 
-            autocomplete="off"
-            value="<?=isset($_POST['databaseName'])?$_POST['databaseName']:''?>"
-        >
+    <table style="width:100%">
+        <tr>
+            <td style="vertical-align: baseline; width: 40%;">
 
-        <br>
+                <form action="" method="POST" id="tableNameForm">
+                    <label for="databaseName">Název databáze</label><br>
+                    <input 
+                        type="text" 
+                        id="databaseName" 
+                        name="databaseName" 
+                        spellcheck="false" 
+                        autocomplete="off"
+                        value="<?=isset($_POST['databaseName'])?$_POST['databaseName']:''?>"
+                    >
+                    <br>
+                    <label for="tableName">Název tabulky</label><br>
+                    <input 
+                        type="text" 
+                        id="tableName" 
+                        name="tableName" 
+                        spellcheck="false" 
+                        autocomplete="off"
+                        value="<?=isset($_POST['tableName'])?$_POST['tableName']:''?>"
+                    >
+                    <br>
+                    <button class="button">Vygenerovat</button>
+                </form>
 
-        <label for="tableName">Název tabulky</label><br>
-        <input 
-            type="text" 
-            id="tableName" 
-            name="tableName" 
-            spellcheck="false" 
-            autocomplete="off"
-            value="<?=isset($_POST['tableName'])?$_POST['tableName']:''?>"
-        >
+            </td>
+            <td style="">
+                
+                <?php
+                    if (isset($_POST['databaseName'])) {
+                        $databaseName = $_POST['databaseName'];
+                    } else {
+                        die();
+                    }
 
-        <br>
+                    getTableList();
+                ?>
+            </td>
+        </tr>
+    </table>
 
-        <button class="button">Vygenerovat</button>
-
-    </form>
-
-    <hr>
 
     <?php
 
@@ -90,22 +105,13 @@ function getTableList() {
     }
 
     echo '<p>Dostupné tabulky <span class="refreshButton"><i class="fas fa-sync"></i></span></p>';
+
     echo '<ul class="tableList">';
     foreach ($result as $key => $val) {
         echo '<li><a onclick="loadDaoTable(\''.$val['TABLE_NAME'].'\')">'.$val['TABLE_NAME'].'</a></li>';
     }
     echo '</ul>';
 }
-
-    require 'autoloader.php';
-    
-    if (isset($_POST['databaseName'])) {
-        $databaseName = $_POST['databaseName'];
-    } else {
-        die();
-    }
-    
-    getTableList();
 
     if (isset($_POST['tableName'])) {
         $tableName = $_POST['tableName']; // user
