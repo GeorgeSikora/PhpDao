@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
 
+    <link rel="stylesheet" href="assets/styles/main.css">
     <link rel="stylesheet" href="assets/styles/autoMap.css">
 
     <!-- Highlight.js themes -->
@@ -32,12 +33,26 @@
 </head>
 <body>
 
+
+    <div class="page">
+
     <?php
     $databaseName = '';
     require 'autoloader.php';
     ?>
+
+    <div class="navbar">
+        <p class="title">PHP Database Access Object</p>
+        <a class="button">Úvod</a>
+        <a class="button" href="examples.php">Ukázka</a>
+        <a class="button" href="autoMap.php">Mapování</a>
+
+        <a class="githubLink" href="https://github.com/GeorgeSikora/PhpDao" target="_blank">Github <i class="fab fa-github"></i> (source code)</a>
+    </div>
+
+    <div class="content">
     
-    <p class="titleText">PHP DAO - Automatické mapování pro MySQL</p>
+    <p class="titleText">Automatické mapování pro MySQL databáze</p>
     
     <hr>
 
@@ -70,7 +85,7 @@
                 </form>
 
             </td>
-            <td style="">
+            <td style="vertical-align: baseline">
                 
                 <?php
                     if (isset($_POST['databaseName'])) {
@@ -90,7 +105,7 @@
 
 function getTableList() {
     global $databaseName;
-    $con = mysqli_connect("localhost", "root", "", $databaseName) or die('<p class="error"><i class="fas fa-exclamation-triangle"></i> Chyba s připijením k databázi,<br>nebo je název databáze zadán špatně!</p>');
+    $con = mysqli_connect("localhost", "root", "", $databaseName) or die('<p class="error"><i class="fas fa-exclamation-triangle"></i> Chyba s připojením k databázi,<br>nebo je název databáze zadán špatně!</p>');
 
     $result = SQL($con, 
     "   SELECT TABLE_NAME 
@@ -128,7 +143,7 @@ function getTableList() {
     $tableNameUniform = substr($tableName, 0, -1); // user
     $objTableName = ucfirst($tableNameUniform); // User
 
-    $con = mysqli_connect("localhost", "root", "", $databaseName) or die('<p class="error"><i class="fas fa-exclamation-triangle"></i> Chyba s připijením k databázi,<br>nebo je název databáze zadán špatně!</p>');
+    $con = mysqli_connect("localhost", "root", "", $databaseName) or die('<p class="error"><i class="fas fa-exclamation-triangle"></i> Chyba s připojením k databázi,<br>nebo je název databáze zadán špatně!</p>');
     $result = SQL($con,
     "   SELECT COLUMN_NAME, DATA_TYPE, COLUMN_TYPE
         FROM INFORMATION_SCHEMA.COLUMNS 
@@ -212,6 +227,15 @@ function getTableList() {
     echo '&#13;&#13;?>';
 
     ?></code></pre>
+
+    </div>
+    </div>
+
+    <div class="pattern">&nbsp;</div>
+
+    <div class="page-footer">
+        <p class="copyright">&copy 2021 Jiří Sikora</p>
+    </div>
 
 </body>
 </html>

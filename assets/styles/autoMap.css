@@ -1,16 +1,4 @@
 
-body {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 8px 32px;
-    font-size: 16px;
-    background-color: #252526;
-    color: #fff;
-    font-family: FreeMono, monospace;
-    width: 50%;
-}
-
 p {
     margin: 0;
 }
@@ -32,7 +20,7 @@ pre {
 }
 
 hr {
-    border-color: #30382c;
+    border-color: #3c3731;
     width: calc(100% +16px);
     margin-left: -8px;
 }
@@ -120,6 +108,7 @@ input[type=text] {
 
 /* BUTTONS */
 .button {
+    color: black;
     cursor: pointer;
     font-size: 15px;
     margin: 4px 0;
@@ -127,6 +116,7 @@ input[type=text] {
     background-color: #9cdcfe;
     border: 1px solid #254674;
     border-radius: 4px;
+    text-decoration: none;
 }
 .button:hover {
     color: #eee;
@@ -139,8 +129,9 @@ input[type=text] {
     margin: 4px 0;
     text-decoration: underline;
     max-height: 280px;
-    overflow-y: scroll;
+    overflow-y: auto;
     background-color: #0002;
+    min-height: 135px;
 }
 .tableList a {
     cursor: pointer;

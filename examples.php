@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <link rel="stylesheet" href="assets/styles/examples.css"/>
     
+    <link rel="stylesheet" href="assets/styles/main.css">
+    <link rel="stylesheet" href="assets/styles/autoMap.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
     <link rel="stylesheet" href="assets/styles/highlightjs/vs2015.css">
     
@@ -19,7 +21,25 @@
 </head>
 <body>
 
-<h2>DAO - Vysvětlení s příklady 🧱 <a href="https://github.com/GeorgeSikora/PhpDao" target="_blank">Github <i class="fab fa-github"></i> (zdrojový kód)</a> <span class="author">Jiří Sikora 23.04.21</span></h2>
+<div class="page">
+
+<?php
+$databaseName = '';
+require 'autoloader.php';
+?>
+
+<div class="navbar">
+    <p class="title">PHP Database Access Object</p>
+    <a class="button">Úvod</a>
+    <a class="button" href="examples.php">Ukázka</a>
+    <a class="button" href="autoMap.php">Mapování</a>
+
+    <a class="githubLink" href="https://github.com/GeorgeSikora/PhpDao" target="_blank">Github <i class="fab fa-github"></i> (source code)</a>
+</div>
+
+<div class="content">
+
+<p class="titleText">DAO - Vysvětlení s příklady 🧱 <span class="author">Jiří Sikora 23.04.21</span></parse_url>
 <p class='comment'>V PHP jsem si vytvořil univerzální třídu DAO, pomocí které 
 můžeme pracovat s objekty a tabulkami s databází. Stačí aby jsme ke každé tabulce v 
 db měli vytvořený objekt se stejnými proměnnými, jak sloupci v tabulce.</p>
@@ -70,7 +90,7 @@ function echoUsers($users) {
     echo "</table>";
 }
 
-echo "<p><b>Vytvoření DAO instance</b> ~ <i>\$ud = new UserDAO();</i></p>";
+echo "<p><b>Vytvoření DAO instance</b> ~ <i class='code'>\$ud = new UserDAO();</i></p>";
 $ud = new UserDAO();
 echo "<p class='comment'>DAO - Database Access Object, pomocí této instance komunikujeme s tabulkou</p>";
 
@@ -124,6 +144,15 @@ echoUsers($users);
 <hr>
 
 <p class='comment'>A to je vše, děkuji za pozornost 🥳</p>
+
+</div>
+</div>
+
+<div class="pattern">&nbsp;</div>
+
+<div class="page-footer">
+    <p class="copyright">&copy 2021 Jiří Sikora</p>
+</div>
 
 </body>
 </html>

@@ -1,0 +1,98 @@
+
+body {
+    margin: 0;
+    background-color: #222;
+    font-family: FreeMono, monospace;
+}
+
+.page {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    color: #fff;
+    width: 1000px;
+    background-color: #252526;
+    box-shadow: 4px 6px 12px #0005;
+}
+
+.page .content {
+    padding: 20px 32px 48px 32px;
+    min-height: 700px;
+}
+
+.navbar {
+    padding: 16px 24px;
+    background-image: url('../images/wallpaer.jpg');
+    background-position: center;
+
+    box-shadow: 0 6px 12px #0004;
+}
+
+.navbar .title {
+    font-size: 36px;
+    padding-bottom: 24px;
+}
+
+.navbar .button {
+    color: white;
+    background-color: transparent;
+    border: solid 1px #fff2;
+    transition: 0.2s;
+}
+
+.navbar .githubLink {
+    position: relative;
+    right: 0;
+    bottom: 0;
+    float: right;
+
+    color: #ffa;
+    font-weight: 400;
+    font-size: 14px;
+    text-decoration: none;
+
+    text-shadow: 1px 1px #f00;
+}
+
+.navbar .githubLink {
+    display: inline-block;
+    position: relative;
+}
+
+.navbar .githubLink:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #ffa;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.navbar .githubLink:hover:after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+/*** FOOTER ***/
+
+.pattern {
+    position: relative;
+    z-index: 5;
+    background-image: url('../images/pattern.png');
+    width: 100%;
+    height: 63px;
+    margin-top: -48px;
+}
+.page-footer {
+    text-align: center;
+    font-size: 16px;
+    color: #ddd;
+    /* background-color: #274e6b; */
+    background-image: linear-gradient(to bottom, #274e6b, #01213b);
+    padding: 6px 0 32px 0;
+}
