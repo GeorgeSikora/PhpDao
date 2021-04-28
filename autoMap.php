@@ -40,23 +40,39 @@
     <table style="width:100%">
         <tr>
             <td style="vertical-align: baseline; width: 40%;">
-
+                
                 <label for="databaseName">Název databáze</label><br>
+                <!--
                 <input 
                     type="text" 
                     id="databaseName" 
                     spellcheck="false" 
                     autocomplete="off"
-                    value="<?=isset($_POST['databaseName'])?$_POST['databaseName']:''?>"
                 >
+                -->
+
+                <select id="databaseName">
+                    <option disabled selected value>.. vyber databázi ..</option>
+                    <?php
+                        $con = DAO::dbConnect();
+                        $databasesList = SQL($con, "SHOW DATABASES", []);
+                        mysqli_close($con);
+
+                        foreach ($databasesList as $index => $db) {
+                            $dbName = $db['Database'];
+                            echo "<option value='$dbName'>$dbName</option>";
+                        }
+                    ?>
+                </select>
+
                 <br>
+
                 <label for="tableName">Název tabulky</label><br>
                 <input 
                     type="text" 
                     id="tableName" 
                     spellcheck="false" 
                     autocomplete="off"
-                    value="<?=isset($_POST['tableName'])?$_POST['tableName']:''?>"
                 >
                 <br>
                 <button class="button" onclick="getTables()">Vygenerovat</button>
@@ -86,23 +102,29 @@ var daoCode;
 var databaseName;
 var tableName;
 
+$('select#databaseName').on('change', function() {
+    getDatabaseTables();
+    $('#daoClassCode').html('<p class="info"><i class="fas fa-info"></i> Dále je potřeba zadat název tabulky,<br>nebo kliknout na jednu z dostupných.</p>');
+});
+
 function getTables() {
     getDatabaseTables();
     getDaoClassCode();
 }
 getTables();
 
-function getDatabaseTables() {
-    databaseName = $('#databaseName').val();
+function getDatabaseTables(database) {
+    databaseName = (database == null) ? $('#databaseName').val() : database;
     $('#tablesList').load('getDatabaseTables.php', { databaseName: databaseName} );
 }
 
-function getDaoClassCode(tableName) {
+function getDaoClassCode(table) {
+    tableName = (table == null) ? $('#tableName').val() : table;
 
-    if (tableName == null) tableName = $('#tableName').val();
+    $('#tableName').val(tableName);
 
     $('#daoClassCode').load('getDaoClassCode.php', { databaseName: databaseName, tableName: tableName}, function() {
-
+    
         daoCode = $('#daoCode').html();
         daoCode = daoCode.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
 

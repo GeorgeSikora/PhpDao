@@ -14,7 +14,7 @@ class DAO {
         $this->className = $this->className();
         $this->tableName = $this->tableName();
     }
-    private function dbConnect() {
+    public static function dbConnect() {
         $mysqli = mysqli_connect("localhost", "root", "", "3bdatabaze") or die("<p class='error'>Chyba s připijením k databázi!</p>");
         return $mysqli;
     }

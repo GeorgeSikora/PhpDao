@@ -11,7 +11,7 @@ if ($databaseName == '') {
     die();
 }
 
-$con = mysqli_connect("localhost", "root", "", $databaseName) or die('<p class="error"><i class="fas fa-exclamation-triangle"></i> Chyba s připojením k databázi,<br>nebo je název databáze zadán špatně!</p>');
+$con = DAO::dbConnect();
 
 $result = SQL($con, 
 "   SELECT TABLE_NAME 

@@ -9,7 +9,7 @@ $databaseName = $_POST['databaseName'];
 $tableName = $_POST['tableName']; // user
 
 if ($databaseName == '') {
-    die('<p class="info"><i class="fas fa-info"></i> V prvé řadě zadejte název databáze.</p>');
+    die('<p class="info"><i class="fas fa-info"></i> V prvé řadě zvolte databázi.</p>');
 }
 
 if ($tableName == '') {
@@ -19,7 +19,7 @@ if ($tableName == '') {
 $tableNameUniform = substr($tableName, 0, -1); // user
 $objTableName = ucfirst($tableNameUniform); // User
 
-$con = mysqli_connect("localhost", "root", "", $databaseName) or die('<p class="error"><i class="fas fa-exclamation-triangle"></i> Chyba s připojením k databázi,<br>nebo je název databáze zadán špatně!</p>');
+$con = DAO::dbConnect();
 $result = SQL($con,
 "   SELECT COLUMN_NAME, DATA_TYPE, COLUMN_TYPE
     FROM INFORMATION_SCHEMA.COLUMNS 

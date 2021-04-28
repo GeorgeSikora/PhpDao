@@ -58,7 +58,7 @@ code {
     cursor: pointer;
 }
 
-input[type=text] {
+input[type=text], select {
     outline: none;
     border: none;
     color: white;
