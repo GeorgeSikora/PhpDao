@@ -25,11 +25,11 @@
 
 <div class="page">
 
-    <?php
+<?php
     $databaseName = '';
     require 'autoloader.php';
     require 'header.php';
-    ?>
+?>
 
 <div class="content">
     

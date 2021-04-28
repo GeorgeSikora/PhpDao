@@ -96,3 +96,10 @@ body {
     background-image: linear-gradient(to bottom, #274e6b, #01213b);
     padding: 6px 0 32px 0;
 }
+.page-footer a {
+    text-decoration: none;
+    color: #8ff;
+}
+.page-footer a:hover {
+    text-decoration: underline;
+}
