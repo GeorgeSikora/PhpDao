@@ -79,6 +79,12 @@
 
             </td>
             <td style="vertical-align: baseline">
+                <p>Dostupné tabulky 
+                    <span class="refreshButton tooltip" onclick="getDatabaseTables()">
+                        <i class="fas fa-sync"></i>
+                        <span class="tooltiptext">Obnovit obsah</span>
+                    </span> <span id="tablesCount" style="color: #aaa;"></span>
+                </p>
                 <div id="tablesList"></div>
             </td>
         </tr>
@@ -86,7 +92,9 @@
 
     <hr>
 
-    <div id="daoClassCode"></div>
+    <div id="daoClassCode">
+        <p class="info"><i class="fas fa-info"></i> V prvé řadě zvolte databázi.</p>
+    </div>
 
 </div>
 </div>
@@ -111,11 +119,51 @@ function getTables() {
     getDatabaseTables();
     getDaoClassCode();
 }
-getTables();
-
+//getTables();
+/*
 function getDatabaseTables(database) {
     databaseName = (database == null) ? $('#databaseName').val() : database;
     $('#tablesList').load('getDatabaseTables.php', { databaseName: databaseName} );
+}
+*/
+function getDatabaseTables(database) {
+    databaseName = (database == null) ? $('#databaseName').val() : database;
+    $.ajax({
+        type: 'POST',
+        url: 'getDatabaseTables.php',
+        data: {databaseName: databaseName},
+        success: function(data) {
+            var result;
+            try {
+                result = JSON.parse(data);
+            } catch(e) {
+                $('#tablesList').html('<p class="error"><i class="fas fa-exclamation-triangle"></i> Databáze neobsahuje žádnou tabulku</p>');
+                return;
+            }
+
+            $('#tablesList').empty();
+            const tables = result.tables;
+            const ul = $("<ul>", {class: "tableList"});
+
+            for (var i = 0; i < tables.length; i++) {
+                const table = tables[i];
+                ul.append(`<li><a onclick="getDaoClassCode('${table}')">${table}</a></li>`);
+            }
+            $('#tablesList').append(ul);
+
+            const tl = tables.length;
+
+            if (tl == 0) {
+                $('#tablesCount').html(`(Žádná tabulka)`);
+            } else if (tl == 1) {
+                $('#tablesCount').html(`(${tl} tabulka)`);
+            } else if (tl < 5) {
+                $('#tablesCount').html(`(${tl} tabulky)`);
+            } else {
+                $('#tablesCount').html(`(${tl} tabulek)`);
+            }
+        }
+    });
 }
 
 function getDaoClassCode(table) {

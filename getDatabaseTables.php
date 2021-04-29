@@ -22,21 +22,17 @@ $result = SQL($con,
 $con->close();
 
 if (count($result) == 0) {
-    die('<p class="error"><i class="fas fa-exclamation-triangle"></i> Databáze neobsahuje žádnou tabulku</p>');
+    die();
 }
-?>
-<p>Dostupné tabulky 
-    <span class="refreshButton tooltip" onclick="getDatabaseTables()">
-        <i class="fas fa-sync"></i>
-        <span class="tooltiptext">Obnovit obsah</span>
-    </span>
-</p>
 
-<?php
-echo '<ul class="tableList">';
+$tables = [];
+
 foreach ($result as $key => $val) {
-    echo '<li><a onclick="getDaoClassCode(\''.$val['TABLE_NAME'].'\')">'.$val['TABLE_NAME'].'</a></li>';
+    array_push($tables, $val['TABLE_NAME']);
 }
-echo '</ul>';
+
+$obj = (object)[];
+$obj->tables = $tables;
+echo json_encode($obj);
 
 ?>

@@ -9,7 +9,7 @@ $databaseName = $_POST['databaseName'];
 $tableName = $_POST['tableName']; // user
 
 if ($databaseName == '') {
-    die('<p class="info"><i class="fas fa-info"></i> V prvé řadě zvolte databázi.</p>');
+    die();
 }
 
 if ($tableName == '') {
