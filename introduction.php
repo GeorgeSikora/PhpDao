@@ -61,8 +61,8 @@
     <p class="titleText">Vývoj 👨🏽‍💻 <span class="author">29.04.21</span>
     <hr>
     <p class='comment'><img src="assets/images/using.jpg" class="image right">
-    Intenzivní vývoj v krátké době, když jsme všichni zavření doma na online hodinách má i pozitivní dopady, v některých věcech. 
-    Proto jsem začal pracovat na tomto projektu, který má rozveselit každého PHP programátora a usnadnit mu nudné navazování sloupců, 
+    Intenzivní vývoj v krátké době, když jsme všichni zavření doma na online hodinách má i pozitivní dopady, v některých věcech, 
+    proto jsem začal pracovat na tomto projektu, který má rozveselit každého PHP programátora a usnadnit mu nudné navazování sloupců, 
     které ani nevidíte, ale používáte v PHP. Systém je kompaktní a nemusíte se zbytečně rozpisovat s SQL dotazem, 
     když by jste chtěli náhodou upravovat nějaké záznamy v databázi.</p>
     <div style="clear: right"></div>
