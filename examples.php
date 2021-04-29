@@ -32,9 +32,6 @@ require 'header.php';
 <div class="content">
 
 <p class="titleText">DAO - Vysvětlení s příklady 🧱 <span class="author">Jiří Sikora 23.04.21</span></parse_url>
-<p class='comment'>V PHP jsem si vytvořil univerzální třídu DAO, pomocí které 
-můžeme pracovat s objekty a tabulkami s databází. Stačí aby jsme ke každé tabulce v 
-db měli vytvořený objekt se stejnými proměnnými, jak sloupci v tabulce.</p>
 
 <hr>
 
