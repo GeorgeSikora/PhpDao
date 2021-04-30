@@ -121,6 +121,7 @@ function getDatabaseTables(database) {
 */
 function getDatabaseTables(database) {
     databaseName = (database == null) ? $('#databaseName').val() : database;
+
     $.ajax({
         type: 'POST',
         url: 'getDatabaseTables.php',
@@ -131,6 +132,7 @@ function getDatabaseTables(database) {
                 result = JSON.parse(data);
             } catch(e) {
                 $('#tablesList').html('<p class="error"><i class="fas fa-exclamation-triangle"></i> Databáze neobsahuje žádnou tabulku</p>');
+                $('#tablesCount').html(`(Žádná tabulka)`);
                 return;
             }
 
@@ -146,9 +148,7 @@ function getDatabaseTables(database) {
 
             const tl = tables.length;
 
-            if (tl == 0) {
-                $('#tablesCount').html(`(Žádná tabulka)`);
-            } else if (tl == 1) {
+            if (tl == 1) {
                 $('#tablesCount').html(`(${tl} tabulka)`);
             } else if (tl < 5) {
                 $('#tablesCount').html(`(${tl} tabulky)`);
@@ -163,6 +163,8 @@ function getDaoClassCode(table) {
     tableName = (table == null) ? $('#tableName').val() : table;
 
     $('#tableName').val(tableName);
+    
+    const startTime = Date.now();
 
     $.ajax({
         type: 'POST',
@@ -181,7 +183,7 @@ function getDaoClassCode(table) {
             const className = result.className;
 
             var daoClassCode = `
-            <p>Zmapovaná tabulka: <b>${tableName}</b></p>
+            <p>Zmapovaná tabulka: <b>${tableName}</b> <span style="color: #aaa;font-size:11px;">(generováno <span id="codeGenerationTime"></span>ms)</span></p>
             <div class="fileName">${className}.class.php 
                 <div id="copyDaoCode" class="tooltip" onclick="copyDaoCode()">
                     <i class="far fa-copy"></i>
@@ -191,7 +193,7 @@ function getDaoClassCode(table) {
                     <i class="fas fa-file-download"></i>
                     <span class="tooltiptext">Stáhnout</span>
                 </div>
-            </div> 
+            </div>
 
             <pre><code id="daoClassCode" class="php">`;
 
@@ -204,6 +206,8 @@ function getDaoClassCode(table) {
             daoCode = daoCode.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
 
             hljs.highlightAll();
+
+            $('#codeGenerationTime').html(Date.now() - startTime);
         }
     });
 }
