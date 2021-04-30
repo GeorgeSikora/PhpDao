@@ -31,7 +31,7 @@ require 'header.php';
 
 <div class="content">
 
-<p class="titleText">DAO - Vysvětlení s příklady 🧱 <span class="author">Jiří Sikora 23.04.21</span></parse_url>
+<p class="titleText">DAO - Vysvětlení s příklady 🧱 <span class="author">23.04.21</span></parse_url>
 
 <hr>
 

@@ -42,15 +42,6 @@
             <td style="vertical-align: baseline; width: 40%;">
                 
                 <label for="databaseName">Název databáze</label><br>
-                <!--
-                <input 
-                    type="text" 
-                    id="databaseName" 
-                    spellcheck="false" 
-                    autocomplete="off"
-                >
-                -->
-
                 <select id="databaseName">
                     <option disabled selected value>.. vyber databázi ..</option>
                     <?php
@@ -74,7 +65,9 @@
                     spellcheck="false" 
                     autocomplete="off"
                 >
+
                 <br>
+                
                 <button class="button" onclick="getTables()">Vygenerovat</button>
 
             </td>
@@ -92,7 +85,7 @@
 
     <hr>
 
-    <div id="daoClassCode">
+    <div id="daoClassCodeDiv">
         <p class="info"><i class="fas fa-info"></i> V prvé řadě zvolte databázi.</p>
     </div>
 
@@ -112,7 +105,7 @@ var tableName;
 
 $('select#databaseName').on('change', function() {
     getDatabaseTables();
-    $('#daoClassCode').html('<p class="info"><i class="fas fa-info"></i> Dále je potřeba zadat název tabulky,<br>nebo kliknout na jednu z dostupných.</p>');
+    $('#daoClassCodeDiv').html('<p class="info"><i class="fas fa-info"></i> Dále je potřeba zadat název tabulky,<br>nebo kliknout na jednu z dostupných.</p>');
 });
 
 function getTables() {
@@ -171,12 +164,47 @@ function getDaoClassCode(table) {
 
     $('#tableName').val(tableName);
 
-    $('#daoClassCode').load('getDaoClassCode.php', { databaseName: databaseName, tableName: tableName}, function() {
-    
-        daoCode = $('#daoCode').html();
-        daoCode = daoCode.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
+    $.ajax({
+        type: 'POST',
+        url: 'getDaoClassCode.php',
+        data: {databaseName: databaseName, tableName: tableName},
+        success: function(data) {
+            var result;
 
-        hljs.highlightAll();
+            try {
+                result = JSON.parse(data);
+            } catch(e) {
+                $('#daoClassCodeDiv').html('<p class="error"><i class="fas fa-exclamation-triangle"></i> Tabulka neexistuje</p>');
+                return;
+            }
+
+            const className = result.className;
+
+            var daoClassCode = `
+            <p>Zmapovaná tabulka: <b>${tableName}</b></p>
+            <div class="fileName">${className}.class.php 
+                <div id="copyDaoCode" class="tooltip" onclick="copyDaoCode()">
+                    <i class="far fa-copy"></i>
+                    <span class="tooltiptext">Kopírovat</span>
+                </div>
+                <div id="downloadDaoCode" class="tooltip" onclick="downloadDaoCode()">
+                    <i class="fas fa-file-download"></i>
+                    <span class="tooltiptext">Stáhnout</span>
+                </div>
+            </div> 
+
+            <pre><code id="daoClassCode" class="php">`;
+
+            daoClassCode += result.classCode;
+            daoClassCode += '</pre></code>';
+            
+            $('#daoClassCodeDiv').html(daoClassCode);
+            
+            daoCode = $('#daoClassCode').html();
+            daoCode = daoCode.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
+
+            hljs.highlightAll();
+        }
     });
 }
 

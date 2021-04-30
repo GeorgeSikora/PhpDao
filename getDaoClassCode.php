@@ -13,11 +13,12 @@ if ($databaseName == '') {
 }
 
 if ($tableName == '') {
-    die('<p class="info"><i class="fas fa-info"></i> Dále je potřeba zadat název tabulky,<br>nebo kliknout na jednu z dostupných.</p>');
+    //die('<p class="info"><i class="fas fa-info"></i> Dále je potřeba zadat název tabulky,<br>nebo kliknout na jednu z dostupných.</p>');
+    die();
 }
 
-$tableNameUniform = substr($tableName, 0, -1); // user
-$objTableName = ucfirst($tableNameUniform); // User
+$classNameUniform = substr($tableName, 0, -1); // user
+$className = ucfirst($classNameUniform); // User
 
 $con = DAO::dbConnect();
 $result = SQL($con,
@@ -29,76 +30,75 @@ $result = SQL($con,
 $con->close();
 
 if (count($result) == 0) {
-    die('<p class="error"><i class="fas fa-exclamation-triangle"></i> Tabulka neexistuje</p>');
+    /*
+    $obj = (object)[];
+    $obj->response = 'error';
+    $obj->error = 'tableNotExists';
+    echo json_encode($obj);
+    */
+    die();
+    //die('<p class="error"><i class="fas fa-exclamation-triangle"></i> Tabulka neexistuje</p>');
 }
 
-?>
-<p>Zmapovaná tabulka: <b><?=$tableName?></b></p>
-
-<div class="fileName"><?=$tableNameUniform?>.class.php 
-    <div id="copyDaoCode" class="tooltip" onclick="copyDaoCode()">
-        <i class="far fa-copy"></i>
-        <span class="tooltiptext">Kopírovat</span>
-    </div>
-    <div id="downloadDaoCode" class="tooltip" onclick="downloadDaoCode()">
-        <i class="fas fa-file-download"></i>
-        <span class="tooltiptext">Stáhnout</span>
-    </div>
-</div> 
-
-<pre><code id="daoCode" class="php"><?php
+$classCode = '';
 
 // Class head
-echo "&lt;?php // $tableNameUniform.class.php&#13;&#13;class $objTableName {&#13;";
+$classCode .= "&lt;?php // $classNameUniform.class.php&#13;&#13;class $className {&#13;";
 
 // Class variables
 foreach ($result as $key => $val) {
-    echo '&#9;public $'.$val['COLUMN_NAME'].'; // '.$val['COLUMN_TYPE'].'&#13;';
+    $classCode .= '&#9;public $'.$val['COLUMN_NAME'].'; // '.$val['COLUMN_TYPE'].'&#13;';
 }
 
 // Constructor head
-echo "&#13;&#9;public function __construct(";
+$classCode .= "&#13;&#9;public function __construct(";
 $index = 0;
 foreach ($result as $key => $val) {
     $varName = $val['COLUMN_NAME'];
     if ($varName == 'id') continue;
-    if ($index != 0) echo ", ";
-    echo '$'.$varName.'=';
+    if ($index != 0) $classCode .= ", ";
+    $classCode .= '$'.$varName.'=';
     switch ($val['DATA_TYPE']) {
         case 'int':
         case 'bigint':
         case 'decimal':
-            echo "0";
+            $classCode .= "0";
             break;
         case 'varchar':
-            echo "''";
+            $classCode .= "''";
             break;
         default:
-            echo "null";
+            $classCode .= "null";
             break;
     }
     $index++;
 }
-echo ") {&#13;";
+$classCode .= ") {&#13;";
 
 // Constructor variables handover
 foreach ($result as $key => $val) {
-    echo '&#9;&#9;$this->'.$val['COLUMN_NAME'].' = ';
+    $classCode .= '&#9;&#9;$this->'.$val['COLUMN_NAME'].' = ';
     if ($val['COLUMN_NAME'] == 'id') {
-        echo '0';
+        $classCode .= '0';
     } else {
-        echo '$'.$val['COLUMN_NAME'];
+        $classCode .= '$'.$val['COLUMN_NAME'];
     }
-    echo ';&#13;';
+    $classCode .= ';&#13;';
 }
 
 // Constructor and class ending brackets
-echo '&#9;}&#13;}&#13;';
+$classCode .= '&#9;}&#13;}&#13;';
 
 // DAO object class
-echo 'class '.$objTableName.'DAO extends DAO {&#13;&#13;}';
+$classCode .= 'class '.$className.'DAO extends DAO {&#13;&#13;}';
 
 // ending php element
-echo '&#13;&#13;?>';
+$classCode .= '&#13;&#13;?>';
 
-?></code></pre>
+$obj = (object)[];
+$obj->response = 'ok';
+$obj->className = $classNameUniform;
+$obj->classCode = $classCode;
+echo json_encode($obj);
+
+?>
