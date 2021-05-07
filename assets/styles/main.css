@@ -103,3 +103,18 @@ body {
 .page-footer a:hover {
     text-decoration: underline;
 }
+
+
+.image {
+    border-radius: 32px; 
+    width: 280px;
+    padding-bottom: 8px;
+}
+.image.left {
+    margin-right: 32px; 
+    float: left;
+}
+.image.right {
+    margin-left: 32px; 
+    float: right;
+}

@@ -21,23 +21,7 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <style>
 
-    .image {
-        border-radius: 32px; 
-        width: 280px;
-        padding-bottom: 8px;
-    }
-    .image.left {
-        margin-right: 32px; 
-        float: left;
-    }
-    .image.right {
-        margin-left: 32px; 
-        float: right;
-    }
-
-    </style>
 </head>
 <body>
 
